@@ -85,9 +85,7 @@ setInterval(async function cotacao(){
         .setTimestamp()
         .setFooter('Smooth love potion','https://i.imgur.com/ySbo5n8.png');
         
-
-    console.log('function called')
-    const target = client.channels.cache.get('855106908461203468')
+    const target = client.channels.cache.get('881952748822745129')
     return target.send({embeds:[cotacao_embed]}) 
 },300000)
 
