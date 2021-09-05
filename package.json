@@ -1,0 +1,15 @@
+{
+  "name": "khal-bot",
+  "version": "1.0.0",
+  "description": "Discord Bot to KhalEspecialForces Server",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Hartmann",
+  "license": "ISC",
+  "dependencies": {
+    "coingecko-api": "^1.0.10",
+    "discord.js": "^13.1.0"
+  }
+}
