@@ -87,7 +87,7 @@ setInterval(async function cotacao(){
         
     const target = client.channels.cache.get('881952748822745129')
     return target.send({embeds:[cotacao_embed]}) 
-},300000)
+},1800000)
 
 
 // e aqui onde a desgraça acontece
