@@ -17,7 +17,7 @@ const registrarComandos = async () => {
     }
 
     // recarrega os comandos
-    const { PingCommand, InfoCommand, CotacaoCommand } = require(`./commands/index.js`);
+    const { PingCommand, criarSalaCommand } = require(`./commands/index.js`);
     const registarComando = (comando) => {
         console.log('adicionando comando', comando.name)
         commands.set(comando.name, comando);
@@ -27,6 +27,7 @@ const registrarComandos = async () => {
     };
 
     registarComando(new PingCommand());
+    registarComando(new criarSalaCommand());
     //registarComando(new InfoCommand());
     //registarComando(new CotacaoCommand());
 };
@@ -54,8 +55,12 @@ client.on('messageCreate', message => {
     if (!cmd || !commands.has(cmd))
         return
 
+
     console.log('comando recebido: ', message.content)
     const command = commands.get(cmd);
+    if (command.needPermissions && command.needPermissions.some(permission => !message.member.permissions.has(command.needPermissions)))
+        return;
+
     try {
         command.run(message, args)
         console.log('comando ', command.name, 'executado')
@@ -66,28 +71,28 @@ client.on('messageCreate', message => {
 
 })
 
-setInterval(async function cotacao(){
+setInterval(async function cotacao() {
 
     const { data } = await Cg.simple.price({
         ids: ['smooth-love-potion'],
         vs_currencies: ['usd', 'brl'],
     });
-    const slp_dolar =  JSON.stringify(data['smooth-love-potion']['usd'])
+    const slp_dolar = JSON.stringify(data['smooth-love-potion']['usd'])
     const slp_real = JSON.stringify(data['smooth-love-potion']['brl'])
     const cotacao_embed = new MessageEmbed()
         .setColor('#0099ff')
         //.setTitle('Cotação SLP')
         .setAuthor('Cotação SLP', 'https://i.imgur.com/ySbo5n8.png')
         .addFields(
-            { name: ':flag_us:', value: `**Dolar:** ${slp_dolar}`},
+            { name: ':flag_us:', value: `**Dolar:** ${slp_dolar}` },
             { name: ':flag_br:', value: `**Real:** ${slp_real}` },
         )
         .setTimestamp()
-        .setFooter('Smooth love potion','https://i.imgur.com/ySbo5n8.png');
-        
+        .setFooter('Smooth love potion', 'https://i.imgur.com/ySbo5n8.png');
+
     const target = client.channels.cache.get('881952748822745129')
-    return target.send({embeds:[cotacao_embed]}) 
-},1800000)
+    return target.send({ embeds: [cotacao_embed] })
+}, 1800000)
 
 
 // e aqui onde a desgraça acontece
