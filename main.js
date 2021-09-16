@@ -17,7 +17,7 @@ const registrarComandos = async () => {
     }
 
     // recarrega os comandos
-    const { PingCommand, criarSalaCommand } = require(`./commands/index.js`);
+    const { PingCommand, criarSalaCommand, criarDataCommand } = require(`./commands/index.js`);
     const registarComando = (comando) => {
         console.log('adicionando comando', comando.name)
         commands.set(comando.name, comando);
@@ -28,6 +28,7 @@ const registrarComandos = async () => {
 
     registarComando(new PingCommand());
     registarComando(new criarSalaCommand());
+    registarComando(new criarDataCommand());
     //registarComando(new InfoCommand());
     //registarComando(new CotacaoCommand());
 };
